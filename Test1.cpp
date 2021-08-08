@@ -15,12 +15,10 @@ char Nombre[20], Contra[20];
 Jugador *Users, *User;
 FILE *DataFile;
 
-//void Play(Player *Users);
 void Play();
 void LogIn();
 void Stadistics();
 void CreateProfile();
-//fscanf
 main()
 {	
 	do
@@ -47,22 +45,6 @@ main()
 				break;
 		}
 	}while(Op != 5);
-	/*
-	Users[0].Username = "12345";
-	Users[0].Password = "12345";
-	Users[0].PlayedGames = 5;
-	Users[0].WinnedGames = 2;
-	Users[0].LossedGames = 3;
-	do
-	{
-		printf("Dame tu usuario: ");
-		gets(VarUsName);
-		printf("Dame tu contraseña: ");
-		gets(VarPassW);
-	}while(strcmp(Users[0].Username, VarUsName) != 0 || strcmp(Users[0].Password, VarPassW));
-	printf("bienvenido al sistema");
-	Play(&Users[0]);*/
-	//printf("Has jugado %i, has ganado %i y has perdido %i", Users[0].PlayedGames, Users[0].WinnedGames, Users[0].LossedGames);
 }
 
 void LogIn()
@@ -76,28 +58,9 @@ void CreateProfile()
 	
 }
 
-//void Play(Player *Users)
 void Play()
 {
-	/*Users -> PlayedGames++;
-	int Tries = 3, Num;
-	RandVal = rand() % 10 + 1;
-	do
-	{
-		printf("Adivina el numero: ");
-		scanf("%i",&Num);
-		Tries--;
-	}while(Tries > 0 && RandVal != Num);
-	if(Num == RandVal)
-	{
-		printf("Ganaste");
-		Users -> WinnedGames++;
-	}
-	else
-	{
-		printf("Perdiste");
-		Users -> LossedGames++;
-	}*/
+
 }
 
 void Stadistics()

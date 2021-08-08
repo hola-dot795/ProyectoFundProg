@@ -69,7 +69,8 @@ void LogIn()
 			if(IsValid == false)
 			{
 				//printf("Comparando %s con %s : %i\n", VarUsName, &Users[i].Username, strcmp((char*)&Users[i].Username, VarUsName));
-				if(strcmp((char*)&Users[i].Username, VarUsName) == 0 || strcmp((char*)&Users[i].Password, VarPassW) == 0)
+				//printf("Comparando %s con %s : %i\n", VarPassW, &Users[i].Password, strcmp((char*)&Users[i].Password, VarPassW));
+				if(strcmp((char*)&Users[i].Username, VarUsName) == 0 && strcmp((char*)&Users[i].Password, VarPassW) == 0)
 				{
 					system("cls");
 					printf("Bienvenido %s\n", &Users[i].Username);
@@ -113,28 +114,39 @@ void DataFromFile()	//carga el archivo de perfiles
 		if (c == '\n')
 		{
 			i++;
-			//printf("Line Found");
 		}
-		//printf("%c", c);
 	}
-	//printf("\n");
 	Users = (Jugador*)malloc(i*sizeof(Jugador));
 	ArraySize = (i);
-	//printf("%i\n", ArraySize);
 	i = 0;
+	fclose(DataFile);
+	DataFile = fopen("file.txt" , "r");
 	while(i < ArraySize)
 	{
 		char Var[40], JJ[3], JG[3];
-		fscanf(DataFile,"%s",Var/* &Users[i].Username, &Users[i].Password, &Users[i].JuegosJugados, &Users[i].JuegosGanados*/);
-		sscanf("asdf fdsa 51 15","%s %s %s %s", &Users[i].Username, &Users[i].Password, &JJ, &JG);
+		int j = 0;
+		//printf("Entra en for\n");
+		for (char c = getc(DataFile); c != '\n'; c = getc(DataFile))
+		{
+			//printf("%c", c);
+			if (c != '\n' || c != EOF)
+			{
+				Var[j] = c;
+				j++;
+			}
+			if(c == EOF)	break;
+		}
+		//printf("\nSale del for\n");
+		//printf("%s\n", Var);
+		sscanf(Var,"%s %s %s %s", &Users[i].Username, &Users[i].Password, &JJ, &JG);
 		Users[i].JuegosJugados = strtol(JJ,NULL,10);
 		Users[i].JuegosGanados = strtol(JG,NULL,10);
-		printf("%s %s %i %i\n", &Users[i].Username, &Users[i].Password, Users[i].JuegosJugados, Users[i].JuegosGanados);
+		//printf("%s %s %i %i\n", &Users[i].Username, &Users[i].Password, Users[i].JuegosJugados, Users[i].JuegosGanados);
 		i++;
 	}
 }
 
 void DataToFile()	//salva el struct de perfiles en el archivo
 {
-	
+	//recordar usar la forma "%s %s %d %d"
 }

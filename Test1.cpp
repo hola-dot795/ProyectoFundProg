@@ -13,7 +13,7 @@ struct Jugador
 int n = 1, Op, UserIndex = -1, ArraySize;	//User index se puede usar como variable para checar si se ha 
 											//iniciado sesion, se mantendra como -1 si no, se cambiara a 0->n si si
 char Nombre[20], Contra[20];
-Jugador *Users/*, *User*/;
+Jugador *Users;
 FILE *DataFile;
 
 void Play();
@@ -56,7 +56,6 @@ void LogIn()
 	char VarUsName[20], VarPassW[20];
 	
 	bool IsValid = false;
-	//printf("%i, %i, %i", ArraySize, VarInArraySize, Size);
 	do
 	{
 		fflush(stdin);
@@ -69,18 +68,12 @@ void LogIn()
 		{
 			if(IsValid == false)
 			{
-				//printf("Comparando %s con %s : %i\n", VarUsName, &Users[i].Username, strcmp((char*)&Users[i].Username, VarUsName));
-				//printf("Comparando %s con %s : %i\n", VarPassW, &Users[i].Password, strcmp((char*)&Users[i].Password, VarPassW));
 				if(strcmp((char*)&Users[i].Username, VarUsName) == 0 && strcmp((char*)&Users[i].Password, VarPassW) == 0)
 				{
 					system("cls");
 					printf("Bienvenido %s\n", &Users[i].Username);
 					IsValid = true;
 					UserIndex = i;
-					/*User[0].JuegosJugados == Users[i].JuegosJugados;
-					User[0].JuegosGanados == Users[i].JuegosGanados;
-					User[0].Password == Users[i].Password;
-					User[0].Username == Users[i].Username;*/
 				}
 			}
 		}
@@ -126,10 +119,8 @@ void DataFromFile()	//carga el archivo de perfiles
 	{
 		char Var[40], JJ[3], JG[3];
 		int j = 0;
-		//printf("Entra en for\n");
 		for (char c = getc(DataFile); c != '\n'; c = getc(DataFile))
 		{
-			//printf("%c", c);
 			if (c != '\n' || c != EOF)
 			{
 				Var[j] = c;
@@ -137,12 +128,9 @@ void DataFromFile()	//carga el archivo de perfiles
 			}
 			if(c == EOF)	break;
 		}
-		//printf("\nSale del for\n");
-		//printf("%s\n", Var);
 		sscanf(Var,"%s %s %s %s", &Users[i].Username, &Users[i].Password, &JJ, &JG);
 		Users[i].JuegosJugados = strtol(JJ,NULL,10);
 		Users[i].JuegosGanados = strtol(JG,NULL,10);
-		//printf("%s %s %i %i\n", &Users[i].Username, &Users[i].Password, Users[i].JuegosJugados, Users[i].JuegosGanados);
 		i++;
 	}
 	fclose(DataFile);
@@ -150,7 +138,6 @@ void DataFromFile()	//carga el archivo de perfiles
 
 void DataToFile()	//salva el struct de perfiles en el archivo
 {
-	//recordar usar la forma "%s %s %d %d"
 	DataFile = fopen("file.txt" , "w");
 	int i = 0;
 	while(i < ArraySize)
@@ -159,13 +146,6 @@ void DataToFile()	//salva el struct de perfiles en el archivo
 			fprintf(DataFile, "%s %s %i %i", &Users[i].Username, &Users[i].Password, Users[i].JuegosJugados, Users[i].JuegosGanados);
 		else
 			fprintf(DataFile, "%s %s %i %i\n", &Users[i].Username, &Users[i].Password, Users[i].JuegosJugados, Users[i].JuegosGanados);
-
-		//printf("\nSale del for\n");
-		//printf("%s\n", Var);
-		//sscanf(Var,"%s %s %s %s", &Users[i].Username, &Users[i].Password, &JJ, &JG);
-		//Users[i].JuegosJugados = strtol(JJ,NULL,10);
-		//Users[i].JuegosGanados = strtol(JG,NULL,10);
-		//printf("%s %s %i %i\n", &Users[i].Username, &Users[i].Password, Users[i].JuegosJugados, Users[i].JuegosGanados);
 		i++;
 	}
 	fclose(DataFile);

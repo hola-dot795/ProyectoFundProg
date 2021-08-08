@@ -10,7 +10,8 @@ struct Jugador
 	int JuegosJugados;
 	int JuegosGanados;
 };
-int n = 1, Op, UserIndex, ArraySize;
+int n = 1, Op, UserIndex = -1, ArraySize;	//User index se puede usar como variable para checar si se ha 
+											//iniciado sesion, se mantendra como -1 si no, se cambiara a 0->n si si
 char Nombre[20], Contra[20];
 Jugador *Users/*, *User*/;
 FILE *DataFile;
@@ -24,7 +25,7 @@ main()
 {	
 	do
 	{
-		printf("bienvenido al juego, que deseas hacer?\n1-Iniciar sesion\n2.-Crear perfil\n3.-Estadisticas\n4.-Jugar\n5.-Salir\n");
+		printf("Menu de juego, selecciona la opcion que deseas hacer\n1.-Iniciar sesion\n2.-Crear perfil\n3.-Estadisticas\n4.-Jugar\n5.-Salir\n");
 		scanf("%i",&Op);
 		switch(Op)
 		{
@@ -67,10 +68,12 @@ void LogIn()
 		{
 			if(IsValid == false)
 			{
-				printf("Comparando %s con %s", VarUsName, Users[i].Username);
-				if(strcmp(Users[i].Username, VarUsName) != 0 || strcmp(Users[i].Password, VarPassW))
+				//printf("Comparando %s con %s : %i\n", VarUsName, &Users[i].Username, strcmp((char*)&Users[i].Username, VarUsName));
+				if(strcmp((char*)&Users[i].Username, VarUsName) == 0 || strcmp((char*)&Users[i].Password, VarPassW) == 0)
 				{
-					IsValid == true;
+					system("cls");
+					printf("Bienvenido %s\n", &Users[i].Username);
+					IsValid = true;
 					UserIndex = i;
 					/*User[0].JuegosJugados == Users[i].JuegosJugados;
 					User[0].JuegosGanados == Users[i].JuegosGanados;
@@ -118,10 +121,15 @@ void DataFromFile()	//carga el archivo de perfiles
 	Users = (Jugador*)malloc(i*sizeof(Jugador));
 	ArraySize = (i);
 	//printf("%i\n", ArraySize);
-	while(!feof(DataFile))
+	i = 0;
+	while(i < ArraySize)
 	{
-		fscanf(DataFile,"%s %s %i %i\n", &Users[i].Username, &Users[i].Password, &Users[i].JuegosJugados, &Users[i].JuegosGanados);
-		printf("%s %s %i %i\n", &Users[i].Username, &Users[i].Password, &Users[i].JuegosJugados, &Users[i].JuegosGanados);
+		char Var[40], JJ[3], JG[3];
+		fscanf(DataFile,"%s",Var/* &Users[i].Username, &Users[i].Password, &Users[i].JuegosJugados, &Users[i].JuegosGanados*/);
+		sscanf("asdf fdsa 51 15","%s %s %s %s", &Users[i].Username, &Users[i].Password, &JJ, &JG);
+		Users[i].JuegosJugados = strtol(JJ,NULL,10);
+		Users[i].JuegosGanados = strtol(JG,NULL,10);
+		printf("%s %s %i %i\n", &Users[i].Username, &Users[i].Password, Users[i].JuegosJugados, Users[i].JuegosGanados);
 		i++;
 	}
 }

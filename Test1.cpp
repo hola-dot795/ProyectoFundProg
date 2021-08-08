@@ -85,7 +85,7 @@ void DataFromFile()	//carga el archivo de perfiles
 	}
 }
 
-void DataToFile()	//salva el archivo de perfiles
+void DataToFile()	//salva el struct de perfiles en el archivo
 {
 	
 }

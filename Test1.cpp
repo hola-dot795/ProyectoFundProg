@@ -86,7 +86,33 @@ void LogIn()
 
 void CreateProfile()
 {
-	
+	if(UserIndex = -1)
+		DataFromFile();
+	DataFile = fopen("file.txt" , "a");
+	char VarUsName[20], VarPassW[20];
+	bool IsValid = true;
+	do
+	{
+		printf("Dame tu usuario: ");
+		fflush(stdin);
+		gets(VarUsName);
+		printf("Dame tu contraseña: ");
+		gets(VarPassW);
+		for(int i = 0; i < ArraySize; i++)
+		{
+			if(IsValid == true)
+			{
+				if(strcmp((char*)&Users[i].Username, VarUsName) == 0)
+				{
+					printf("Ya hay un Usuario con ese nombre, elija otro por favor%s\n", &Users[i].Username);
+					IsValid = false;
+				}
+			}
+		}
+	}while(IsValid == false);
+	fprintf(DataFile, "%s %s %i %i", VarUsName, VarPassW, 0, 0);
+	printf("Se ha guardado su perfil");
+	fclose(DataFile);
 }
 
 void Play()

@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <windows.h>
 
 struct Jugador
 {
@@ -90,7 +91,7 @@ void CreateProfile()
 		DataFromFile();
 	DataFile = fopen("file.txt" , "a");
 	char VarUsName[20], VarPassW[20];
-	bool IsValid = true;
+	bool IsValid;
 	do
 	{
 		printf("Dame tu usuario: ");
@@ -98,20 +99,23 @@ void CreateProfile()
 		gets(VarUsName);
 		printf("Dame tu contraseña: ");
 		gets(VarPassW);
+		IsValid = true;
 		for(int i = 0; i < ArraySize; i++)
 		{
 			if(IsValid == true)
 			{
 				if(strcmp((char*)&Users[i].Username, VarUsName) == 0)
 				{
-					printf("Ya hay un Usuario con ese nombre, elija otro por favor%s\n", &Users[i].Username);
+					printf("Ya hay un Usuario con ese nombre, elija otro por favor\n");
 					IsValid = false;
 				}
 			}
 		}
 	}while(IsValid == false);
-	fprintf(DataFile, "%s %s %i %i", VarUsName, VarPassW, 0, 0);
-	printf("Se ha guardado su perfil");
+	fprintf(DataFile, "\n%s %s %i %i", VarUsName, VarPassW, 0, 0);
+	printf("Se ha guardado su perfil\n");
+	Sleep(3000);
+	system("cls");
 	fclose(DataFile);
 }
 

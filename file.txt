@@ -2,3 +2,4 @@ a1 fdsa 5 5
 J2 aaaa 5 5
 a3 aaaa 5 5
 f4 aaaa 5 5
+a5 a5 0 0

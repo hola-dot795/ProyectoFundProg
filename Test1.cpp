@@ -44,7 +44,11 @@ main()
 				break;
 			default:
 			case 5:	//Salir
-				if(UserIndex != -1)	DataToFile();
+				if(UserIndex != -1)
+				{
+					DataToFile();
+					free(Users);
+				}
 				break;
 		}
 	}while(Op != 5);
